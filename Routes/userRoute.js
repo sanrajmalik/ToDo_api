@@ -8,14 +8,17 @@ const router = express.Router();
 
 router.post('/register',async (req,resp)=>{
     try {
-        const {username,password} = req.body;
-        const hashPassword = await jwtAuth.hashPassword(password);
-        const ifUser = await User.findOne({ username});
-        if(ifUser){
-            resp.status(401).json({ error: 'User already registered' });
-
+        const {name,email,password} = req.body;
+        if(!name || !email) {
+            return resp.status(401).json({ error: 'Please enter name and email' });
         }
-        const user = User.create({ username, password: hashPassword })
+        const hashPassword = await jwtAuth.hashPassword(password);
+        const ifUser = await User.findOne({ email});
+        if(ifUser){
+            return resp.status(401).json({ error: 'User already registered' });
+            
+        }
+        const user = User.create({ name,email, password: hashPassword })
 
         const token = jwtAuth.generateToken(user);
         resp.json({ token });
@@ -28,8 +31,8 @@ router.post('/register',async (req,resp)=>{
 
 router.post('/login',async (req,resp)=>{
     try {
-        const {username,password} = req.body;
-        const user = await User.findOne({ username});
+        const {email,password} = req.body;
+        const user = await User.findOne({ email});
 
         if (!user) {
             return resp.status(401).json({ error: 'Invalid credentials' });

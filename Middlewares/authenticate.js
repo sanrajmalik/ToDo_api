@@ -9,14 +9,14 @@ const authenticate = async (req, res, next) => {
     const user = await User.findOne({ _id: decoded.userId, 'tokens.token': token });
 
     if (!user) {
-      throw new Error();
+      res.status(404).json({ error: 'User Not Found!' });
     }
 
     req.token = token;
     req.userId = user._id;
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Authentication failed' });
+    res.status(401).json({ error: 'Authentication failed!' });
   }
 };
 

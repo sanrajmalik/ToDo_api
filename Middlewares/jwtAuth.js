@@ -4,8 +4,6 @@ const bycrypt= require('bcrypt')
 
 const generateToken = (user)=>{
     return jwt.sign({userId:user._id},'secretKey',{ expiresIn: '1h' })
-
-    
 }
 
 const hashPassword = async (password) => {
