@@ -5,8 +5,10 @@ const todo = require('../Models/todo');
 
 const router = express.Router();
 
+//authenticate
 router.use(authenticate);
 
+//get todo for user
 router.get('/getTodo', async (req, res) => {
   try {
     const tasks = await todo.find({ user: req.userId});
@@ -16,6 +18,7 @@ router.get('/getTodo', async (req, res) => {
   }
 });
 
+//create todo
 router.post('/createTodo', async (req, res) => {
   try {
     const taskData = { ...req.body, user: req.userId};
@@ -26,6 +29,7 @@ router.post('/createTodo', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
 
 router.get('/', async (req, res) => {
   try {

@@ -16,7 +16,10 @@ const authenticate = async (req, res, next) => {
     req.userId = user._id;
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Authentication failed!' });
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({ error: 'Token expired!' });
+    }
+    res.status(401).json({ error: 'Authentication failed!' })
   }
 };
 

@@ -5,6 +5,7 @@ const bycrypt= require('bcrypt')
 
 const router = express.Router();
 
+//user routes
 
 router.post('/register',async (req,resp)=>{
     try {
