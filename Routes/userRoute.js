@@ -19,7 +19,7 @@ router.post('/register',async (req,resp)=>{
             return resp.status(401).json({ error: 'User already registered' });
             
         }
-        const user = User.create({ name,email, password: hashPassword })
+        const user = await User.create({ name,email, password: hashPassword })
 
         const token = jwtAuth.generateToken(user);
         resp.json({ token });
@@ -43,9 +43,10 @@ router.post('/login',async (req,resp)=>{
         if (!isPasswordValid) {
             return resp.status(401).json({ error: 'Invalid credentials' });
         }
+        const userName = user.name;
 
         const token = jwtAuth.generateToken(user);
-        resp.json({ token });
+        resp.json({ token,userName});
     } catch (error) {
         resp.status(500).json({ error: 'Login failed' });
 

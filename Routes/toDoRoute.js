@@ -1,7 +1,7 @@
 // routes/todoRoutes.js
 const express = require('express');
 const authenticate = require('../Middlewares/authenticate');
-const todo = require('../Models/todo');
+const task = require('../Models/todo');
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.use(authenticate);
 //get todo for user
 router.get('/getTodo', async (req, res) => {
   try {
-    const tasks = await todo.find({ user: req.userId});
+    const tasks = await task.find({ user: req.userId});
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -22,8 +22,8 @@ router.get('/getTodo', async (req, res) => {
 router.post('/createTodo', async (req, res) => {
   try {
     const taskData = { ...req.body, user: req.userId};
-    const task = new todo(taskData);
-    const savedTask = await task.save();
+    const tasksave = new task(taskData);
+    const savedTask = await tasksave.save();
     res.status(201).json(savedTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -33,7 +33,7 @@ router.post('/createTodo', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const tasks = await todo.find();
+    const tasks = await task.find();
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -42,7 +42,8 @@ router.get('/', async (req, res) => {
 
 router.put('/updateTodo/:taskId', async (req, res) => {
   try {
-    const updatedTask = await todo.findByIdAndUpdate(req.params.taskId, req.body, { new: true });
+    
+    const updatedTask = await task.findByIdAndUpdate(req.params.taskId, req.body, { new: true });
     res.json(updatedTask);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -51,7 +52,7 @@ router.put('/updateTodo/:taskId', async (req, res) => {
 
 router.delete('/deleteTodo/:taskId', async (req, res) => {
   try {
-    const deletedTask = await todo.findByIdAndDelete(req.params.taskId);
+    const deletedTask = await task.findByIdAndDelete(req.params.taskId);
     if(deletedTask){
       return res.status(200).json({message: "Task deleted"})
     }
