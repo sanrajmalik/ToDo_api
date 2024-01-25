@@ -1,19 +1,17 @@
-# Project Name
+# Todo
 
-Description of your project goes here.
+This project was generated with Node.js version 8.1.4.
 
-## Getting Started
+## Prerequisites
 
-Instructions on how to get a copy of the project and run it locally.
+Before getting started, ensure that you have the following installed on your machine:
+- [Node.js](https://nodejs.org/)
+- [npm (Node Package Manager)](https://www.npmjs.com/)
 
-## Usage
+## Install NPM dependencies
 
-Provide examples or instructions on how to use your project.
+Run `npm i` to install NPM dependencies
 
-## Contributing
+## Development server
 
-Explain how others can contribute to your project.
-
-## License
-
-This project is licensed under the [License Name] - see the [LICENSE.md](LICENSE.md) file for details.
+Run `npm start` for a dev server. Navigate to `http://localhost:3000/`. 
